@@ -234,7 +234,6 @@ docker run --name mynacos -p 8848:8848 -p 9848:9848 -p 10848:10848 -d qingpan/rn
 <li>最新的gnu正式版本: <code>qingpan/rnacos:stable</code></li>
 <li>最新的alpine正式版本: <code>qingpan/rnacos:stable-alpine</code></li>
 </ul>
-<p><strong>MacOS arm系统补充说明</strong> ：目前MacOS arm系统运行<code>stable</code>镜像失败，可以先换成<code>stable-alpine</code>镜像。等后面解决arm <code>stable</code>镜像问题后再把这个注意事项去掉。</p>
 <p>方式3：通过 cargo 编译安装</p>
 <pre><code># 安装
 cargo install rnacos
@@ -515,6 +514,7 @@ KEY3=VALUE3
 <tr><td>RNACOS_RAFT_SNAPSHOT_LOG_SIZE</td><td>raft打包snapshot镜像的日志数量;即变更日志超过这个值则会触发一次打包镜像</td><td>默认值10000</td><td>10000</td><td>0.5.0</td></tr>
 <tr><td>RUST_LOG</td><td>日志等级:debug,info,warn,error;所有http,grpc请求都会打info日志,如果不观注可以设置为error减少日志量</td><td>info</td><td>error</td><td>0.3.0</td></tr>
 <tr><td>RNACOS_ENABLE_NO_AUTH_CONSOLE</td><td>是否开启无鉴权控制台</td><td>false</td><td>false</td><td>0.5.2</td></tr>
+<tr><td>RNACOS_CONSOLE_LOGIN_TIMEOUT</td><td>控制台登陆有效时长(单位为秒)</td><td>一天,86400秒</td><td>86400</td><td>0.5.0</td></tr>
 </tbody></table>
 <p>注：从v0.3.0开始，默认参数启动的节点会被当做只有一个节点，当前节点是主节点的集群部署。支持其它新增的从节点加入。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="性能与容量说明"><a class="header" href="#性能与容量说明">性能与容量说明</a></h1>
