@@ -528,6 +528,7 @@ KEY3=VALUE3
 <tr><td>RUST_LOG</td><td>日志等级:debug,info,warn,error;所有http,grpc请求都会打info日志,如果不观注可以设置为error减少日志量</td><td>info</td><td>error</td><td>0.3.0</td></tr>
 <tr><td>RNACOS_ENABLE_NO_AUTH_CONSOLE</td><td>是否开启无鉴权控制台</td><td>false</td><td>false</td><td>0.5.2</td></tr>
 <tr><td>RNACOS_CONSOLE_LOGIN_TIMEOUT</td><td>控制台登陆有效时长(单位为秒)</td><td>一天,86400秒</td><td>86400</td><td>0.5.0</td></tr>
+<tr><td>RNACOS_GMT_OFFSET_HOURS</td><td>日志时间的时区，单位小时；默认为本机时区，运行在docker时需要指定</td><td>local</td><td>8(东8区),-5(西5区)</td><td>0.5.7</td></tr>
 </tbody></table>
 <p>注：从v0.3.0开始，默认参数启动的节点会被当做只有一个节点，当前节点是主节点的集群部署。支持其它新增的从节点加入。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="性能与容量说明"><a class="header" href="#性能与容量说明">性能与容量说明</a></h1>
@@ -728,9 +729,14 @@ java nacos server版本: 2.1.0</p>
 <p><img src="https://user-images.githubusercontent.com/1174480/268327170-92bc26d6-8c17-4060-b0ad-796d6e3c06e7.png" alt="" /></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="架构"><a class="header" href="#架构">架构</a></h1>
 <h2 id="r-nacos架构图"><a class="header" href="#r-nacos架构图">r-nacos架构图</a></h2>
-<p>单实例：</p>
-<p><img src="https://github.com/heqingpan/rnacos/raw/master/doc/assets/imgs/rnacos_L2_0.1.4.svg" alt="" /></p>
-<p>前端应用因依赖nodejs,所以单独放到另一个项目 <a href="https://github.com/heqingpan/rnacos-console-web">r-nacos-console-web</a> ,再通过cargo 把打包好的前端资源引入到本项目,避免开发rust时还要依赖nodejs。</p>
+<p><img src="https://raw.githubusercontent.com/r-nacos/r-nacos/master/doc/assets/imgs/r-nacos_L2_0.3.7.svg" alt="架构图" /></p>
+<p>说明：</p>
+<ul>
+<li>r-nacos默认支持集群部署，单机就相当于一个节点的集群，后续有需要可以按需加入新的节点；</li>
+<li>数据持久化使用raft协议分布式数据库(raft协议+节点文件存储),类似etcd;</li>
+<li>只需对<code>RNACOS_CONFIG_DB_DIR:nacos_db</code>目录下的文件备份与恢复，即可实现数据的备份与恢复；</li>
+<li>r-nacos控制台使用前后端分离架构；前端应用因依赖nodejs,所以单独放到另一个项目 <a href="https://github.com/r-nacos/rnacos-console-web">r-nacos-console-web</a> ,再通过cargo 把打包好的前端资源引入到本项目,避免开发rust时还要依赖nodejs。</li>
+</ul>
 <p>多实例的raft和distro分布式协议说明待补充</p>
 <h2 id="配置中心-3"><a class="header" href="#配置中心-3">配置中心</a></h2>
 <p>配置模型图</p>
